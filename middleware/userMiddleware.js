@@ -11,7 +11,7 @@ const requireUser = (req, res, next) => {
     jwt.verify(token, 'pi secret', (err, decodedToken) => {
       if (err) {
         console.log(err.message);
-        res.redirect('/login');
+       // res.redirect('/login');
       } else {
         console.log(decodedToken);
         next();
@@ -22,7 +22,7 @@ const requireUser = (req, res, next) => {
   }
 };
 
-
+// check current user
 const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
@@ -32,8 +32,9 @@ const checkUser = (req, res, next) => {
         next();
       } else {
         let user = await User.findById(decodedToken.id);
-        req.user=user;
+        //req.user=user;
         res.locals.user = user;
+        //console.log(user)
         next();
       }
     });

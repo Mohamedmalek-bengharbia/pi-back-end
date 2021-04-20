@@ -38,7 +38,7 @@ const userSchema = new Schema(
       type: Number,
       required: true,
     },
-    skinColor: {
+    skincolor: {
       type: String,
       required: true,
     },

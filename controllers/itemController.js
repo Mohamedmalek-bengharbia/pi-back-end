@@ -1,15 +1,30 @@
 const Item = require("../models/item");
+//const {checkUser} = require("../middleware/userMiddleware");
+//const User=require('../models/user');
 
 const item_create_post = (req, res) => {
+  
   const item = new Item(req.body);
+  
+  //checkUser.items = checkUser.items.concat(item._id);
+  
+  // checkUser
+  // .save()
+  // .then((result) => {
+  //   res.json();
+  //     })
+
   item
-    .save()
+  .save() 
     .then((result) => {
       res.json();
     })
     .catch((err) => {
       console.log(err);
     });
+    
+  
+  
 };
 
 const item_update= async(req,res)=>{
@@ -20,7 +35,7 @@ const item_update= async(req,res)=>{
 
 const item_delete = (req, res) => {
   const id = req.params.id;
-
+ 
   Item
     .findByIdAndDelete(id)
     .then((result) => {

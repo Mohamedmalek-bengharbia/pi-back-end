@@ -17,7 +17,7 @@ const user_create_post = (req, res) => {
     user
       .save()
       .then((result) => {
-        res.json({user:user._id});
+        res.json({user:user._id,token:token});
       })
       .catch((err) => {
         console.log(err);

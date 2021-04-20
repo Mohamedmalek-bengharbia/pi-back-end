@@ -2,6 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+var cors = require("cors");
+
+
 const customizedCategoryRoutes=require("./routes/customizedCategoryRoutes")
 const logoutRoutes=require("./routes/logoutRoutes")
 const loginRoutes = require("./routes/loginRoutes");
@@ -15,9 +18,9 @@ const dURI =
 
 mongoose
   .connect(dURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(3000))
+  .then(() => app.listen(3001))
   .catch((err) => console.log(err));
-
+app.use(cors())
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -34,3 +37,5 @@ app.use("/categories", categoryRoutes);
 app.use("/login", loginRoutes);
 app.use("/logout", logoutRoutes);
 app.use("/customizedCategories", customizedCategoryRoutes);
+
+module.exports = app;

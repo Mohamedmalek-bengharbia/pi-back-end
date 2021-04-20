@@ -16,15 +16,15 @@ const login_post = async (req, res) => {
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).json({ user: user.userName });
-    
+    //{ user: user.userName }
   } catch (err) {
     res.status(400).json();
   }
 };
-const login_get = (req, res) => {
-  res.render("login");
-};
+// const login_get = (req, res) => {
+//   res.render("login");
+// };
 module.exports = {
   login_post,
-  login_get,
+  //login_get,
 };
