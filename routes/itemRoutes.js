@@ -3,11 +3,13 @@ const router = express.Router();
 const itemController = require("../controllers/itemController");
 const {requireUser} = require("../middleware/userMiddleware");
 
-
+ 
 
 router.post("/",requireUser, itemController.item_create_post);
 
-router.delete("/:id",requireUser, itemController.item_delete);
+router.post("/:itemid/catid",requireUser, itemController.item_cust_post);
+
+router.delete("/:id/",requireUser, itemController.item_delete);
 
 router.get("/",requireUser, itemController.item_index);
 

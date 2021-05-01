@@ -11,16 +11,8 @@ const customizedCategorySchema = new Schema(
       type: String,
       required: true,
     },
-    items: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Item",
-      },
-    ],
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+    items: { type : Array},
+    
   },
   { timestamps: true }
 );

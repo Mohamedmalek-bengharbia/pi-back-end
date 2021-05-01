@@ -4,9 +4,8 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 var cors = require("cors");
 
-
-const customizedCategoryRoutes=require("./routes/customizedCategoryRoutes")
-const logoutRoutes=require("./routes/logoutRoutes")
+const customizedCategoryRoutes = require("./routes/customizedCategoryRoutes");
+const logoutRoutes = require("./routes/logoutRoutes");
 const loginRoutes = require("./routes/loginRoutes");
 const userRoutes = require("./routes/userRoutes");
 const itemRoutes = require("./routes/itemRoutes");
@@ -20,7 +19,13 @@ mongoose
   .connect(dURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => app.listen(3001))
   .catch((err) => console.log(err));
-app.use(cors())
+var cors = require("cors");
+var corsOptions = {
+  origin: "*",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -30,7 +35,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('*',checkUser);
+app.get("*", checkUser);
+app.post("*", checkUser);
+
 app.use("/users", userRoutes);
 app.use("/items", itemRoutes);
 app.use("/categories", categoryRoutes);

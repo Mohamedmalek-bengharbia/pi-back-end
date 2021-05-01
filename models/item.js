@@ -10,21 +10,24 @@ const itemSchema = new Schema(
     itemImg: {
       type: String,
       required: true,
-    },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    customizedCategories: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "CustomizedCategory",
-      },
-    ],
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-    },
+    }
+    //,
+    // user: 
+      
+    //     { type : Array},
+      
+    
+
+    // customizedCategories: 
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "CustomizedCategory",
+    //   },
+    
+
+    //, category: {
+    //   type: String,
+    // },
   },
   { timestamps: true }
 );

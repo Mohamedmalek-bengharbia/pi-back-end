@@ -4,6 +4,9 @@ const bcrypt = require("bcrypt");
 
 const Schema = mongoose.Schema;
 
+
+
+
 const userSchema = new Schema(
   {
     firstName: {
@@ -38,6 +41,11 @@ const userSchema = new Schema(
       type: Number,
       required: true,
     },
+    role: {
+      type: String,
+      enum : ['admin','user'],
+      default: 'user'
+  },
     skincolor: {
       type: String,
       required: true,
@@ -46,18 +54,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    items: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Item",
-      },
-    ],
-    customizedCategories: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "CustomizedCategory",
-      },
-    ],
+    items: 
+      { type : Array}
+    ,
+    customizedCategories: { type : Array},
   },
   { timestamps: true }
 );
@@ -65,23 +65,26 @@ const userSchema = new Schema(
 //   console.log('new user was created',doc);
 //   next();
 // });
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-userSchema.statics.login = async function (email, password) {
+
+userSchema.statics.login = async function(email, password) {
   const user = await this.findOne({ email });
+  
   if (user) {
-    const connected = await bcrypt.compare(password, user.password);
-    if (connected) {
+    const auth = await bcrypt.compare(password, user.password);
+    
+    if (auth) {
       return user;
     }
-    throw Error("incorrect password");
+    throw Error('incorrect password');
   }
-  throw Error("incorrect email");
+  throw Error('incorrect email'); 
 };
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("user", userSchema);
 module.exports = User;

@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { router } = require("../app");
 const User=require('../models/user')
 
 
@@ -11,14 +12,15 @@ const requireUser = (req, res, next) => {
     jwt.verify(token, 'pi secret', (err, decodedToken) => {
       if (err) {
         console.log(err.message);
+        console.log('passed ');
        // res.redirect('/login');
       } else {
-        console.log(decodedToken);
+        //console.log(decodedToken);
         next();
       }
     });
   } else {
-    res.redirect('/login');
+   // res.redirect('/login');
   }
 };
 
@@ -32,13 +34,13 @@ const checkUser = (req, res, next) => {
         next();
       } else {
         let user = await User.findById(decodedToken.id);
-        //req.user=user;
-        res.locals.user = user;
-        //console.log(user)
+       // res.user=res.user;
+        //res.locals.user = user;
         next();
       }
+      //console.log("decodedToken.id",decodedToken.id)
     });
-  } else {
+  } else { 
     res.locals.user = null;
     next();
   }
