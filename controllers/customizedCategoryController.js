@@ -4,7 +4,7 @@ const jwt_decode = require("jwt-decode");
 
 
 const customizedCategory_create_post = async (req, res) => {
-  const customizedCategory  = new CustomizedCategory(req.body);
+  const customizedCategory  = new CustomizedCategory({castName:req.body.castName,castImg:req.file.path});
   const id = jwt_decode(req.cookies.jwt);
   const user = await User.findByIdAndUpdate(id.id, { $push: { customizedCategories: customizedCategory } });
   const result = await user.save();

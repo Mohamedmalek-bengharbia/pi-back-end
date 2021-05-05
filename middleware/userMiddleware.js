@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { router } = require("../app");
 const User=require('../models/user')
-
+const jwt_decode = require("jwt-decode");
 
 
 const requireUser = (req, res, next) => {
@@ -13,6 +13,7 @@ const requireUser = (req, res, next) => {
       if (err) {
         console.log(err.message);
         console.log('passed ');
+
        // res.redirect('/login');
       } else {
         //console.log(decodedToken);
@@ -23,6 +24,20 @@ const requireUser = (req, res, next) => {
    // res.redirect('/login');
   }
 };
+// const requireAdmin = async (req, res,next ) => {
+//    const id = jwt_decode(req.cookies.jwt);
+//    const user = await User.findById(id.id);
+   
+//    if (user.role='user'){
+    
+//     console.log("this is user")
+//     }else {
+//       console.log("this is admin");
+//       next()
+//     }
+//   }
+  
+// ;
 
 // check current user
 const checkUser = (req, res, next) => {

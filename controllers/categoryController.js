@@ -3,7 +3,7 @@ const jwt_decode = require("jwt-decode");
 const User = require("../models/user");
 
 const category_create_post = (req, res) => {
-  const category = new Category(req.body);
+  const category = new Category({catName:req.body.catName,catImg:req.file.path});
   category
     .save()
     .then((result) => {

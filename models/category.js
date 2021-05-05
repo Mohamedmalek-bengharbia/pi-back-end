@@ -9,7 +9,7 @@ const categorySchema = new Schema(
     },
     catImg: {
       type: String,
-      required: true,
+      required: true, 
     }
     
   },

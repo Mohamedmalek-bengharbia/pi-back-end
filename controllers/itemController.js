@@ -3,12 +3,11 @@ const { checkUser } = require("../middleware/userMiddleware");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const jwt_decode = require("jwt-decode");
-const Category = require("../models/category");
-const CustomizedCategory = require ("../models/customizedCategory");
 
 
 const item_create_post = async (req, res) => {
-  const item = new Item(req.body);
+  const item = new Item({itemName:req.body.itemName,itemImg:req.file.path});
+ // const item = new Item(req.body);
   const id = jwt_decode(req.cookies.jwt);
   const user = await User.findByIdAndUpdate(id.id, { $push: { items: item } });
   const result = await user.save();
@@ -33,29 +32,15 @@ const item_create_post = async (req, res) => {
     });
 };  
 
-const item_cust_post = async (req,res)=>{
+const item_cust_post = async(req,res)=>{
+  const item = new Item({itemName:req.body.itemName,itemImg:req.file.path});  const id = jwt_decode(req.cookies.jwt);
+  const user = await User.findById(id.id)
+  user.customizedCategories.find(cat=>cat.castName==req.params.castName).items.push(req.body)
   
+   //const user = await User.findByIdAndUpdate(id.id, {$push: {customizedCategories: item} });
+  const result = await user.save(); 
   
-  
-  
-  
-  
-  
-  
-  // const item =new Item(req.body);
-  // const cust_cat = await CustomizedCategory.findOne({ castName:item.customized});
-  // cust_cat.items = cust_cat.items.concat(item._id) ;
-  // await cust_cat.save();
-  // item
-  // .save()
-  // .then((result) => {
-  //   res.send(item);
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // });
-
-}
+}             
 
 const item_update = async (req, res) => {
   const id = req.params.id;
